@@ -1,6 +1,8 @@
 package gt.maxzhao.ittest.app.login.api;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -9,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/app")
 public class AppLoginController {
-    @RequestMapping("/login")
+    @RequestMapping(name = "/login",method = RequestMethod.POST)
+    @ResponseBody
     public String login(Object o) {
 
         return "";

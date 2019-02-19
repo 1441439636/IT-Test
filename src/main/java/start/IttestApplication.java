@@ -34,12 +34,11 @@ public class IttestApplication {
         SprintBootStartUtils.LoadBasePackages(IttestApplication.class.getName());
         SpringApplication.run(IttestApplication.class, args);
     }
-
     @Bean
     CommandLineRunner init(AppUserRepository appUserRepository) {
         return (args) -> {
             Arrays.stream("ntop,lilei,hanmeimei".split(",")).forEach(name -> {
-                appUserRepository.save(new AppUser(name, "1"));
+//                appUserRepository.save(new AppUser(name, "1"));
             });
         };
     }
