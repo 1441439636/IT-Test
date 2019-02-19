@@ -1,0 +1,72 @@
+##springboot: asepackage=
+#
+#devtools:
+#  livereload:
+#    enabled: true #是否支持livereload
+#    port: 35729
+#  restart:
+#    enabled: true #是否支持热部署
+#
+#server:
+#  port: 8060
+#  #session失效时间
+#  #  session-timeout: 30
+#  #编码
+#  #  tomcat: uri-encoding=utf-8
+#  #通用数据源配置
+#  #com.mysql.jdbc.Driver
+##
+##  servlet:
+##    context-path:
+#
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://129.204.114.165:3306/maxzhao_ittest?charset=utf8mb4&useSSL=false
+    username: root
+    password: 19961022lS
+## Hikari 数据源专用配置
+#    hikari:
+#      maximum-pool-size: 20
+#      minimum-idle: 5
+#  # JPA 相关配置
+#  jpa:
+#    database: mysql
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    show-sql: true
+#    generate-ddl: true
+#
+#    hibernate:
+#      ddl-auto: create
+#      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+#    properties:
+#
+#      #不加此配置，获取不到当前currentsession
+#      hibernate:
+#        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+#        dialect: org.hibernate.dialect.MySQL5Dialect
+#  redis:
+##    host: 129.204.114.165
+##    password:
+#    port: 6379
+#    database: 0
+#    # 连接池最大连接数（使用负值表示没有限制）
+#    lettuce:
+#      pool:
+#        max-active: 8
+#    # 连接池最大阻塞等待时间
+#        max-wait: -1ms
+#    # 连接池中的最大空闲连接
+#        max-idle: 8
+#    # 连接池中的最小空闲连接
+#        min-idle: 0
+#    # 连接超时时间（毫秒）
+#    timeout: 5000ms
+#
+###配置缓存相关
+##cache:
+##  default:
+##    expire-time: 200
+##  user:
+##    expire-time: 180
+##    name: test
