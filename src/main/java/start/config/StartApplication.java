@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories("gt.maxzhao.**.repo")
 @EntityScan({"gt.maxzhao.**.model"})
-@ComponentScan({"gt.maxzhao.**.aspect", "gt.maxzhao.**.util"})
+@ComponentScan({"gt.maxzhao.**.aspect", "gt.maxzhao.**.utils"})
 @ComponentScan({"gt.maxzhao.**.api", "gt.maxzhao.**.service.**", "gt.maxzhao.**.dao"})
 @PropertySource(value = {"classpath:*.properties","classpath:*.yml"}, ignoreResourceNotFound = true, encoding = "utf-8")
 public class StartApplication {

@@ -29,8 +29,8 @@ public class TransactionManagerConfig {
     private PlatformTransactionManager transactionManager;
 
     /**
-     * @author yc
-     * @data 2018年7月28日
+     * @author maxzhao
+     * @data 2018年11月28日
      * @description springBoot事务配置
      */
 
@@ -72,8 +72,8 @@ public class TransactionManagerConfig {
     }
 
     /**
-     * @author yc
-     * @data 2018年7月27日
+     * @author maxzhao
+     * @data 2018年11月28日
      * @description 利用AspectJExpressionPointcut设置切面=切点+通知（写成内部bean的方式）
      *  
      */

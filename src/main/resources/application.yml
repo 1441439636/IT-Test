@@ -25,6 +25,11 @@ spring:
     url: jdbc:mysql://129.204.114.165:3306/maxzhao_ittest?charset=utf8mb4&useSSL=false
     username: root
     password: 19961022lS
+#  mvc:
+#    static-path-pattern: /**    配置这个之后，就可以不用/static
+#    static-path-pattern: /static/**    配置这个之后，必须用/static
+     # 默认值为 classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
 ## Hikari 数据源专用配置
 #    hikari:
 #      maximum-pool-size: 20

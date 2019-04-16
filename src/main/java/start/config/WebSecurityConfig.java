@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
@@ -18,6 +19,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import start.IttestApplication;
@@ -59,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                         (ExpressionUrlAuthorizationConfigurer.AuthorizedUrl) http
                                                 .authorizeRequests()// 定义哪些URL需要被保护、哪些不需要被保护
                                                 // 设置所有人都可以访问home页面
-                                                .antMatchers("/", "/home").permitAll()
+                                                .antMatchers("/", "/home", "/js/vue.js").permitAll()
                                                 .anyRequest()// 任何请求,登录后可以访问
                                 )
                                         .authenticated()
@@ -111,13 +114,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .withUser("user").password("password").roles("USER");
         auth
                 .userDetailsService(buildUserDetailsService())
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(new BCryptPasswordEncoder(8));
     }
     // out of date ,use protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(buildUserDetailsService());
 //    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        //解决静态资源被拦截的问题
+        web.ignoring().antMatchers("/js/**", "/css/**", "/img/**");
+    }
 
     UserDetailsService buildUserDetailsService() {
         return username -> {
@@ -196,7 +205,7 @@ class PasswordEncoderImpl implements PasswordEncoder {
      */
     @Override
     public String encode(CharSequence rawPassword) {
-       /* String salt;
+        String salt;
         if (this.strength > 0) {
             if (this.random != null) {
                 salt = BCrypt.gensalt(this.strength, this.random);
@@ -207,7 +216,7 @@ class PasswordEncoderImpl implements PasswordEncoder {
             salt = BCrypt.gensalt();
         }
 
-        return BCrypt.hashpw(rawPassword.toString(), salt);*/
+//        return BCrypt.hashpw(rawPassword.toString(), salt);
         return rawPassword.toString();
     }
 
@@ -246,6 +255,7 @@ class PasswordEncoderImpl implements PasswordEncoder {
         return false;
     }
 }
+
 /**
  * 加载特定于用户的数据的核心接口。
  * 它作为用户DAO在整个框架中使用，是DaoAuthenticationProvider使用的策略。
@@ -253,9 +263,10 @@ class PasswordEncoderImpl implements PasswordEncoder {
  *
  * @author maxzhao
  */
- class UserDetailsServiceImpl implements UserDetailsService {
+class UserDetailsServiceImpl implements UserDetailsService {
     /**
      * 根据用户名定位用户。
+     *
      * @param username
      * @return
      * @throws UsernameNotFoundException
@@ -269,10 +280,12 @@ class PasswordEncoderImpl implements PasswordEncoder {
         return userDetails;
     }
 }
+
 /**
  * 提供核心用户信息。
  * 出于安全目的，Spring Security不直接使用实现。它们只是存储用户信息，这些信息稍后封装到身份验证对象中。这允许将非安全相关的用户信息(如电子邮件地址、电话号码等)存储在一个方便的位置。
  * 具体实现必须特别注意，以确保每个方法的非空契约都得到了执行。有关参考实现(您可能希望在代码中对其进行扩展或使用)，请参见User。
+ *
  * @author maxzhao
  */
 class UserDetailsImpl implements UserDetails {
@@ -300,6 +313,7 @@ class UserDetailsImpl implements UserDetails {
 
     /**
      * 返回用于验证用户身份的密码。
+     *
      * @return Returns the password used to authenticate the user.
      */
     @Override
